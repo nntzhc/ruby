@@ -16,23 +16,14 @@ public class RunePanelController : MonoBehaviour
     public List<List<int>> ringProperties = new List<List<int>>();
     public List<string> ringDictionary = new List<string>();
     //各类组件
-    private GameObject magicInputSpeedSlider;
-    private GameObject magicCapacitySlider;
-    private GameObject magicConsumptionSlider;
+    private ScrollbarPrefeb scrollbarPrefeb;
+    private InputFieldPrefeb inputFieldPrefeb; // 保存 PanelControl 组件的引用
+    public GameObject ringPrefab;
 
-    private Slider magicInputSpeedSliderComponent;
-    private Slider magicCapacitySliderComponent;
-    private Slider magicConsumptionSliderComponent;
     //滚轮相关操作参数
     public float scaleSpeed = 1.0f;
     public float minScale = 0.2f;
     public float maxScale = 2.0f;
-
-
-    private InputField magicInputSpeedInput;
-    private InputField magicCapacityInput;
-    private InputField magicConsumptionInput;
-    public GameObject ringPrefab;
     public float originRingRadius = 50.0f;
     public Vector2 originRingCenter = new Vector2(-2, -5);
     private int ringsNum = 0;
@@ -41,7 +32,7 @@ public class RunePanelController : MonoBehaviour
     private float originScale = 0.8f;
     private float correctionCoefficientForGraphicProportion = 0.8f;
     private float ringThickness;
-    private int selectedRingIndex = -1;
+    public int selectedRingIndex = -1;
     private int selectedRingIndexPast = 0;
     public float clickPos;
     void Start()
@@ -51,6 +42,10 @@ public class RunePanelController : MonoBehaviour
         ringDictionary.Add("objectRing");
         ringDictionary.Add("moveRing");
         ringDictionary.Add("activityRing");
+
+        scrollbarPrefeb = FindObjectOfType<ScrollbarPrefeb>();
+        inputFieldPrefeb = FindObjectOfType<InputFieldPrefeb>();
+
         // 添加鼠标点击事件监听器
         // 点击空白取消选中所有的环
         EventTrigger.Entry clickEntry = new EventTrigger.Entry();
@@ -89,7 +84,7 @@ public class RunePanelController : MonoBehaviour
             newScale = (i + 1) * zoomScale;
             ringThickness = zoomScale * originRingRadius * correctionCoefficientForGraphicProportion;
             // 设置环的scale
-            Debug.Log("ring index is " + i + "ring newScale is " + newScale);
+            // Debug.Log("ring index is " + i + "ring newScale is " + newScale);
             RingITransform.localScale = new Vector3(newScale, newScale, 1f);
             RingI.GetComponent<RingPrefeb>().index = i;
             //乘了一个修正系数
@@ -149,6 +144,10 @@ public class RunePanelController : MonoBehaviour
         string path = "UI/" + ringDictionary[ringProperties[selectedRingIndex][1]] + "Selected";
         Sprite newSprite = Resources.Load<Sprite>(path);
         ringImage.sprite = newSprite;
+
+        // 更新右侧输入
+        inputFieldPrefeb.UpdateValue();
+        scrollbarPrefeb.UpdateValue();
     }
     // 删除选中的环
     public void DeleteSelectedRing()

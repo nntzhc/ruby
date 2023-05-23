@@ -25,7 +25,7 @@ public class InterfaceManager : MonoBehaviour
         {
             if (!isRuneUIOpen)
             {
-                Debug.Log("SpellCraft set active");
+                // Debug.Log("SpellCraft set active");
                 SpellCraft.SetActive(true);
                 isRuneUIOpen = true;
                 Time.timeScale = 0;
@@ -45,7 +45,7 @@ public class InterfaceManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("SpellCraft set deactive");
+                // Debug.Log("SpellCraft set deactive");
                 SpellCraft.SetActive(false);
                 isRuneUIOpen = false;
                 Time.timeScale = 1;
