@@ -1,32 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class HealthCollectible : MonoBehaviour
+/// <summary>
+/// Will handle giving health to the character when they enter the trigger.
+/// </summary>
+public class HealthCollectible : MonoBehaviour 
 {
-    public AudioClip audioClip;
-
-    public GameObject effectParticle;
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        //Debug.Log("与我们发生碰撞的对象是："+collision);
-        RubyController rubyController = collision.GetComponent<RubyController>();
-        //当前发生触发检测的游戏物体对象身上有否有RubyController脚本
-        if (rubyController!=null)
+        RubyController controller = other.GetComponent<RubyController>();
+
+        if (controller != null)
         {
-            //有RubyController脚本
-            //Ruby是否满血
-            if (rubyController.Health<rubyController.maxHealth)
-            {
-                //Ruby是不满血状态
-                //rubyController.Health=rubyController.Health+1;
-                rubyController.ChangeHealth(1);
-                rubyController.PlaySound(audioClip);
-                Instantiate(effectParticle,transform.position,Quaternion.identity);
-                Destroy(gameObject);
-            }
-         
+            controller.ChangeHealth(1);
+            Destroy(gameObject);
         }
     }
 }

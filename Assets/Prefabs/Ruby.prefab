@@ -95,21 +95,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 8466948644098543510}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89a49be595c710648b8e59e43e3d4810, type: 3}
+  m_Script: {fileID: 11500000, guid: 7be5c9220d0d0504591c18793dd6ad18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3.5
+  speed: 0
   maxHealth: 5
   timeInvincible: 2
   isInvincible: 0
   invincibleTimer: 0
-  projectilePrefab: {fileID: 7054043659589593879, guid: aa8852df79c67aa4aa7c4dfbf7635ed0,
-    type: 3}
-  audioSource: {fileID: 740583382161783038}
-  walkAudioSource: {fileID: 8154253099715460894}
-  playerHit: {fileID: 8300000, guid: 9b1bb1f450b7d444fa4a8019d13519a7, type: 3}
-  attackSoundClip: {fileID: 8300000, guid: b2edfd40873655249ba0e01a5cf705be, type: 3}
-  walkSound: {fileID: 8300000, guid: a20c77ecd5de9eb4a98731b45ad84c3e, type: 3}
+  projectilePrefab: {fileID: 0}
+  audioSource: {fileID: 0}
+  walkAudioSource: {fileID: 0}
+  playerHit: {fileID: 0}
+  attackSoundClip: {fileID: 0}
+  walkSound: {fileID: 0}
+  runePanel: {fileID: 0}
 --- !u!61 &-5546332954962586642
 BoxCollider2D:
   m_ObjectHideFlags: 0

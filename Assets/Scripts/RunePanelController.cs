@@ -21,20 +21,21 @@ public class RunePanelController : MonoBehaviour
     public GameObject ringPrefab;
 
     //滚轮相关操作参数
-    public float scaleSpeed = 1.0f;
+    private float scaleSpeed = 3.0f;
     public float minScale = 0.2f;
     public float maxScale = 2.0f;
     public float originRingRadius = 50.0f;
-    public Vector2 originRingCenter = new Vector2(-2, -5);
+    public Vector2 originRingCenter = new Vector3(-2, -5, 0);
     private int ringsNum = 0;
     private float zoomScale = 1.0f;
     private float pastZoomScale;
     private float originScale = 0.8f;
-    private float correctionCoefficientForGraphicProportion = 0.8f;
+    private float correctionCoefficientForGraphicProportion = 1.0f;
     private float ringThickness;
     public int selectedRingIndex = -1;
     private int selectedRingIndexPast = 0;
     public float clickPos;
+
     void Start()
     {
         EventTrigger eventTrigger = gameObject.AddComponent<EventTrigger>();
@@ -42,6 +43,7 @@ public class RunePanelController : MonoBehaviour
         ringDictionary.Add("objectRing");
         ringDictionary.Add("moveRing");
         ringDictionary.Add("activityRing");
+        ringDictionary.Add("splitRing");
 
         scrollbarPrefeb = FindObjectOfType<ScrollbarPrefeb>();
         inputFieldPrefeb = FindObjectOfType<InputFieldPrefeb>();
@@ -69,6 +71,7 @@ public class RunePanelController : MonoBehaviour
             zoomScale = zoomScale < minScale ? minScale : zoomScale;
             ArrangeRingsPlacement();
         }
+
     }
 
     public void ArrangeRingsPlacement()
@@ -87,6 +90,7 @@ public class RunePanelController : MonoBehaviour
             // Debug.Log("ring index is " + i + "ring newScale is " + newScale);
             RingITransform.localScale = new Vector3(newScale, newScale, 1f);
             RingI.GetComponent<RingPrefeb>().index = i;
+            ringProperties[i][0] = i;
             //乘了一个修正系数
             RingI.GetComponent<RingPrefeb>().radius = ringThickness;
             RingITransform.localScale = new Vector3(newScale, newScale, 1f);
@@ -144,7 +148,7 @@ public class RunePanelController : MonoBehaviour
         string path = "UI/" + ringDictionary[ringProperties[selectedRingIndex][1]] + "Selected";
         Sprite newSprite = Resources.Load<Sprite>(path);
         ringImage.sprite = newSprite;
-
+        Debug.Log("ring " + selectedRingIndex + "selected");
         // 更新右侧输入
         inputFieldPrefeb.UpdateValue();
         scrollbarPrefeb.UpdateValue();
@@ -160,6 +164,7 @@ public class RunePanelController : MonoBehaviour
             ringsNum = ringsNum - 1;
             //删除最外侧环不知为何尺寸会出问题
             if (selectedRingIndex != ringsNum) ArrangeRingsPlacement();
+            selectedRingIndex = selectedRingIndex - 1;
         }
     }
 

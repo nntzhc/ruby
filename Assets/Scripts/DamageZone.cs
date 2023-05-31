@@ -1,18 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class DamageZone : MonoBehaviour
+/// <summary>
+/// This class will apply continuous damage to the Player as long as it stay inside the trigger on the same object
+/// </summary>
+public class DamageZone : MonoBehaviour 
 {
-    private void OnTriggerStay2D(Collider2D collision)
+    void OnTriggerStay2D(Collider2D other)
     {
-        //Debug.Log("与我们发生碰撞的对象是："+collision);
-        RubyController rubyController = collision.GetComponent<RubyController>();
-        //当前发生触发检测的游戏物体对象身上有否有RubyController脚本
-        if (rubyController != null)
+        RubyController controller = other.GetComponent<RubyController>();
+
+        if (controller != null)
         {
-            rubyController.ChangeHealth(-1);
-            //Debug.Log("Ruby当前的生命值是：" + rubyController.Health);
+            //the controller will take care of ignoring the damage during the invincibility time.
+            controller.ChangeHealth(-1);
         }
     }
 }

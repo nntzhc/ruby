@@ -33,6 +33,7 @@ public class RubyController : MonoBehaviour
     private Vector3 respawnPosition;
     private bool isRuneUIOpen = false;
     public GameObject runePanel;
+    private Vector2 position;
 
     // Start is called before the first frame update
     private void Start()
@@ -63,15 +64,15 @@ public class RubyController : MonoBehaviour
             lookDirection.Set(move.x, move.y);
             //lookDirection = move;
             lookDirection.Normalize();
-            if (!walkAudioSource.isPlaying)
-            {
-                walkAudioSource.clip = walkSound;
-                walkAudioSource.Play();
-            }
+            // if (!walkAudioSource.isPlaying)
+            // {
+            //     walkAudioSource.clip = walkSound;
+            //     walkAudioSource.Play();
+            // }
         }
         else
         {
-            walkAudioSource.Stop();
+            // walkAudioSource.Stop();
         }
         //动画的控制
         animator.SetFloat("Look X", lookDirection.x);
@@ -79,14 +80,14 @@ public class RubyController : MonoBehaviour
         animator.SetFloat("Speed", move.magnitude);
 
         //移动
-        Vector2 position = transform.position;
+        position = transform.position;
         ////Ruby的水平方向移动
         //position.x = position.x + speed * horizontal*Time.deltaTime;
         ////Ruby的垂直方向移动
         //position.y = position.y + speed * vertical*Time.deltaTime;
         //Ruby位置的移动
         position = position + speed * move * Time.deltaTime;
-        //transform.position = position;
+        // transform.position = position;
         rigidbody2d.MovePosition(position);
 
         //无敌时间计算
@@ -168,14 +169,14 @@ public class RubyController : MonoBehaviour
 
     private void Launch()
     {
-        if (!UIHealthBar.instance.hasTask)
-        {
-            return;
-        }
+        // if (!UIHealthBar.instance.hasTask)
+        // {
+        //     return;
+        // }
         GameObject projectileObject = Instantiate(projectilePrefab,
             rigidbody2d.position + Vector2.up * 0.5f, Quaternion.identity);
         Projectile projectile = projectileObject.GetComponent<Projectile>();
-        projectile.Launch(lookDirection, 300);
+        projectile.Launch(position, lookDirection, 10, 4);
         animator.SetTrigger("Launch");
         PlaySound(attackSoundClip);
     }
